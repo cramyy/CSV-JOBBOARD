@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Board</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="job-list">
+        {% for job in jobs %}
+        <div class="job-card">
+            <h3>{{ job['Post'] }}</h3>
+            <p>{{ job['Client Name'] }}</p>
+            <p>{{ job['Job Location'] }}</p>
+            <p>{{ job['Qualification'] }}</p>
+            <p class="salary">₹{{ job['Salary'] }} yearly</p>
+            <p>{{ job['Responsibility'] }}</p>
+            <a href="#" class="apply-button">Apply Now</a>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

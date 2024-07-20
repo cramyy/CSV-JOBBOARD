@@ -1,5 +1,8 @@
 import requests
 import pandas as pd
+from jinja2 import Environment, FileSystemLoader
+import os
+import re
 
 # URL of the Google Spreadsheet exported as an Excel file
 spreadsheet_url = 'https://docs.google.com/spreadsheets/d/1MvcSBIFc6hgd2bqN1NEEhfgcxp9NfPwT9qicIVFiwXA/export?format=xlsx'
@@ -12,37 +15,33 @@ with open('jobs.xlsx', 'wb') as file:
 # Load the data into a DataFrame
 df = pd.read_excel('jobs.xlsx', sheet_name='Client_Job_Posts')
 
-# Generate the HTML for the job cards
-job_cards = ''
-for _, row in df.iterrows():
-    # Skip if Post is NaN
-    if pd.isna(row['Post']):
-        continue
-    
-    # Remove content within parentheses from Post
-    post = row['Post'].split('(')[0].strip()
-    
-    job_cards += f'''
-    <div class="job-card">
-        <h3>{post}</h3>
-        <p>{row['Client Name']}</p>
-        <p>{row['Job Location']}</p>
-        <p>{row['Qualification']}</p>
-        <p class="salary">₹{row['Salary']} yearly</p>
-        <p>{row['Responsibility']}</p>
-        <a href="#" class="apply-button">Apply Now</a>
-    </div>
-    '''
+# Remove rows where 'Post' is NaN
+df = df.dropna(subset=['Post'])
 
-# Read the index.html template
-with open('index.html', 'r', encoding='utf-8') as file:
-    html_content = file.read()
+# Function to remove text within brackets
+def remove_brackets(text):
+    if isinstance(text, str):
+        return re.sub(r'\[.*?\]|\(.*?\)', '', text).strip()
+    return text
 
-# Insert the job cards into the template
-updated_html = html_content.replace('<!-- Jobs will be inserted here by the Python script -->', job_cards)
+# Clean data by removing text within brackets
+df['Post'] = df['Post'].apply(remove_brackets)
+df['Client Name'] = df['Client Name'].apply(remove_brackets)
+df['Job Location'] = df['Job Location'].apply(remove_brackets)
+df['Qualification'] = df['Qualification'].apply(remove_brackets)
+df['Responsibility'] = df['Responsibility'].apply(remove_brackets)
 
-# Save the updated HTML
-with open('index.html', 'w', encoding='utf-8') as file:
-    file.write(updated_html)
+# Setup Jinja2 environment
+env = Environment(loader=FileSystemLoader('.'))
+template = env.get_template('template.html')
 
-print("HTML file updated successfully.")
+# Render the template with job data
+html_output = template.render(jobs=df.to_dict(orient='records'))
+
+# Delete the existing index.html file if it exists
+if os.path.exists('index.html'):
+    os.remove('index.html')
+
+# Save the rendered HTML to index.html
+with open('index.html', 'w') as file:
+    file.write(html_output)
