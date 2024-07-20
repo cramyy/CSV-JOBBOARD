@@ -1,37 +1,65 @@
+import sys
 import requests
 import pandas as pd
 from jinja2 import Environment, FileSystemLoader
 import re
+from git import Repo
+import os
 
-# URL of the Google Spreadsheet exported as an Excel file
-spreadsheet_url = 'https://docs.google.com/spreadsheets/d/1MvcSBIFc6hgd2bqN1NEEhfgcxp9NfPwT9qicIVFiwXA/export?format=xlsx'
+def convert_to_export_link(shareable_link):
+    file_id = shareable_link.split('/d/')[1].split('/')[0]
+    return f'https://docs.google.com/spreadsheets/d/{file_id}/export?format=xlsx'
 
-# Fetch the spreadsheet data
-response = requests.get(spreadsheet_url)
-with open('jobs.xlsx', 'wb') as file:
-    file.write(response.content)
+def main(shareable_link):
+    spreadsheet_url = convert_to_export_link(shareable_link)
 
-# Load the data into a DataFrame
-df = pd.read_excel('jobs.xlsx', sheet_name='Client_Job_Posts')
+    # Fetch the spreadsheet data
+    response = requests.get(spreadsheet_url)
+    with open('jobs.xlsx', 'wb') as file:
+        file.write(response.content)
 
-# Remove rows where 'Post' is NaN
-df = df.dropna(subset=['Post'])
+    # Load the data into a DataFrame
+    df = pd.read_excel('jobs.xlsx', sheet_name='Client_Job_Posts')
 
-# Function to remove parentheses and their content
-def remove_parentheses(text):
-    return re.sub(r'\([^)]*\)', '', str(text)).strip()
+    # Remove rows where 'Post' is NaN
+    df = df.dropna(subset=['Post'])
 
-# Apply the function to all columns
-for column in df.columns:
-    df[column] = df[column].apply(remove_parentheses)
+    # Function to remove parentheses and their content
+    def remove_parentheses(text):
+        return re.sub(r'\([^)]*\)', '', str(text)).strip()
 
-# Setup Jinja2 environment
-env = Environment(loader=FileSystemLoader('.'))
-template = env.get_template('template.html')
+    # Apply the function to all columns
+    for column in df.columns:
+        df[column] = df[column].apply(remove_parentheses)
 
-# Render the template with job data
-html_output = template.render(jobs=df.to_dict(orient='records'))
+    # Setup Jinja2 environment
+    env = Environment(loader=FileSystemLoader('.'))
+    template = env.get_template('template.html')
 
-# Save the rendered HTML to index.html using UTF-8 encoding
-with open('index.html', 'w', encoding='utf-8') as file:
-    file.write(html_output)
+    # Render the template with job data
+    html_output = template.render(jobs=df.to_dict(orient='records'))
+
+    # Save the rendered HTML to index.html using UTF-8 encoding
+    with open('index.html', 'w', encoding='utf-8') as file:
+        file.write(html_output)
+
+    # Push changes to GitHub
+    repo = Repo('.')
+    
+    # Stage all changes
+    repo.git.add(A=True)
+    
+    # Check if there are changes to commit
+    if repo.is_dirty(untracked_files=True):
+        repo.git.commit('-m', 'Update job listings')
+        origin = repo.remote(name='origin')
+        origin.push()
+        print("Job board updated and changes pushed to GitHub!")
+    else:
+        print("No changes to commit. Job board is up to date.")
+
+if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        main(sys.argv[1])
+    else:
+        print("No Google Sheet link provided.")
