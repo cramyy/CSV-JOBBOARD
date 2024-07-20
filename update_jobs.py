@@ -15,25 +15,34 @@ df = pd.read_excel('jobs.xlsx', sheet_name='Client_Job_Posts')
 # Generate the HTML for the job cards
 job_cards = ''
 for _, row in df.iterrows():
+    # Skip if Post is NaN
+    if pd.isna(row['Post']):
+        continue
+    
+    # Remove content within parentheses from Post
+    post = row['Post'].split('(')[0].strip()
+    
     job_cards += f'''
     <div class="job-card">
-        <h3>{row['Post']}</h3>
+        <h3>{post}</h3>
         <p>{row['Client Name']}</p>
         <p>{row['Job Location']}</p>
         <p>{row['Qualification']}</p>
-        <p class="salary">${row['Salary']} yearly</p>
+        <p class="salary">₹{row['Salary']} yearly</p>
         <p>{row['Responsibility']}</p>
         <a href="#" class="apply-button">Apply Now</a>
     </div>
     '''
 
 # Read the index.html template
-with open('index.html', 'r') as file:
+with open('index.html', 'r', encoding='utf-8') as file:
     html_content = file.read()
 
 # Insert the job cards into the template
 updated_html = html_content.replace('<!-- Jobs will be inserted here by the Python script -->', job_cards)
 
 # Save the updated HTML
-with open('index.html', 'w') as file:
+with open('index.html', 'w', encoding='utf-8') as file:
     file.write(updated_html)
+
+print("HTML file updated successfully.")
