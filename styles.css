@@ -89,7 +89,7 @@ body {
     top: 25px;
     right: -55px;
     transform: rotate(45deg);
-    background-color: rgba(159, 53, 220, 0.85); /* Softer red with some transparency */
+    background-color: rgba(174, 0, 255, 0.85); /* Softer red with some transparency */
     color: white;
     padding: 5px 60px;
     font-size: 0.8em;
