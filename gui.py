@@ -156,50 +156,20 @@ class JobUpdaterGUI(QMainWindow):
             python_path = sys.executable
 
         try:
-            # Run the update_jobs.py script
             subprocess.run([python_path, 'update_jobs.py', download_link, updater_name], check=True)
-
-            # Git operations
-            repo_path = os.path.dirname(os.path.abspath(__file__))
-            repo = Repo(repo_path)
-
-            # Check if there are changes
-            if repo.is_dirty(untracked_files=True):
-                # Stage all changes
-                repo.git.add(A=True)
-
-                # Commit changes
-                commit_message = f"Update job listings by {updater_name}"
-                repo.index.commit(commit_message)
-
-                # Create a new branch
-                branch_name = f"job-update-{updater_name.replace(' ', '-')}-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
-                repo.git.checkout('-b', branch_name)
-
-                # Push the new branch to origin
-                repo.git.push('--set-upstream', 'origin', branch_name)
-
-                # Create pull request using GitHub CLI (gh)
-                pr_title = f"Job Update by {updater_name}"
-                pr_body = f"This pull request contains job listing updates made by {updater_name}."
-                subprocess.run(['gh', 'pr', 'create', '--title', pr_title, '--body', pr_body], check=True)
-
-                self.logger.log("INFO", f"Pull request created by {updater_name}")
-                self.status_label.setText("Jobs updated and pull request created successfully!")
-            else:
-                self.logger.log("INFO", "No changes to commit")
-                self.status_label.setText("No changes detected in job listings.")
-
         except subprocess.CalledProcessError as e:
             raise Exception(f"Error running update_jobs.py: {e}")
-        except GitCommandError as e:
-            raise Exception(f"Git error: {e}")
 
     def update_log_display(self):
         try:
             with open('logs.txt', 'r') as log_file:
-                logs = log_file.read()
-                self.log_display.setText(logs)
+                logs = log_file.readlines()
+                # Reverse the order of logs
+                logs.reverse()
+                # Join the reversed logs into a single string
+                log_text = ''.join(logs)
+                self.log_display.setText(log_text)
+                # Scroll to the bottom
                 self.log_display.verticalScrollBar().setValue(
                     self.log_display.verticalScrollBar().maximum()
                 )
