@@ -1,10 +1,15 @@
+import sys
 import requests
 import pandas as pd
 from jinja2 import Environment, FileSystemLoader
 import re
 
-# URL of the Google Spreadsheet exported as an Excel file
-spreadsheet_url = 'https://docs.google.com/spreadsheets/d/1MvcSBIFc6hgd2bqN1NEEhfgcxp9NfPwT9qicIVFiwXA/export?format=xlsx'
+# Get the spreadsheet URL from command-line argument
+if len(sys.argv) > 1:
+    spreadsheet_url = sys.argv[1]
+else:
+    print("Error: No spreadsheet URL provided.")
+    sys.exit(1)
 
 # Fetch the spreadsheet data
 response = requests.get(spreadsheet_url)
@@ -35,3 +40,5 @@ html_output = template.render(jobs=df.to_dict(orient='records'))
 # Save the rendered HTML to index.html using UTF-8 encoding
 with open('index.html', 'w', encoding='utf-8') as file:
     file.write(html_output)
+
+print("Jobs updated successfully!")
