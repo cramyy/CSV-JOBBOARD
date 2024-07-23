@@ -166,7 +166,7 @@ class JobUpdaterGUI(QMainWindow):
             repo.git.checkout('-b', branch_name)
             
             repo.git.add('.')
-            repo.git.commit('-m', f"Update jobs by {updater_name}")
+            repo.git.commit('-m', f"Updated jobs by {updater_name}")
             
             # Set the remote URL with the token
             remote_url = f'https://{github_token}@github.com/{self.repo_owner}/{self.repo_name}.git'
