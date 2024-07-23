@@ -5,7 +5,6 @@ import uuid
 import getpass
 from git import Repo, GitCommandError
 from datetime import datetime
-from datetime import datetime
 from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QLineEdit, QPushButton, QLabel, QTextEdit
 from PyQt6.QtGui import QColor, QPalette
 from PyQt6.QtCore import Qt, QPropertyAnimation, QEasingCurve
@@ -128,8 +127,11 @@ class JobUpdaterGUI(QMainWindow):
             # Run the update_jobs.py file with the new link
             self.run_update_jobs(download_link, updater_name)
 
-            self.status_label.setText("Jobs updated successfully!")
-            self.logger.log("INFO", f"Jobs updated by {updater_name}")
+            # Push changes and create a pull request
+            self.push_changes(updater_name)
+
+            self.status_label.setText("Jobs updated and pull request created successfully!")
+            self.logger.log("INFO", f"Jobs updated and pull request created by {updater_name}")
         except Exception as e:
             error_message = f"Error: {str(e)}"
             self.status_label.setText(error_message)
@@ -159,6 +161,20 @@ class JobUpdaterGUI(QMainWindow):
             subprocess.run([python_path, 'update_jobs.py', download_link, updater_name], check=True)
         except subprocess.CalledProcessError as e:
             raise Exception(f"Error running update_jobs.py: {e}")
+
+    def push_changes(self, updater_name):
+        repo_path = '.'  # Assuming the script is in the root of the repository
+        repo = Repo(repo_path)
+        repo.git.add(update=True)
+        repo.index.commit(f'Updated jobs by {updater_name}')
+        origin = repo.remote(name='origin')
+        origin.push()
+
+        # Create a pull request (you need GitHub CLI installed and authenticated)
+        branch_name = f'update-{datetime.now().strftime("%Y%m%d%H%M%S")}'
+        repo.git.checkout('-b', branch_name)
+        repo.git.push('--set-upstream', 'origin', branch_name)
+        subprocess.run(['gh', 'pr', 'create', '--title', f'Update jobs by {updater_name}', '--body', 'Automated update.'])
 
     def update_log_display(self):
         try:
