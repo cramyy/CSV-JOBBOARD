@@ -200,3 +200,17 @@ TIME: 08:12PM
 DATE: 23 July 2024
 
 
+Username: Nimis
+MAC Address: 78:e0:81:04:12:48
+INFO - System Info
+TIME: 08:28PM
+DATE: 23 July 2024
+
+
+Username: Nimis
+MAC Address: 78:e0:81:04:12:48
+INFO - System Info
+TIME: 08:33PM
+DATE: 23 July 2024
+
+
