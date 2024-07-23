@@ -1,4 +1,119 @@
-2024-07-23 18:23:26,802 - root - INFO - Jobs updated by nimish 
-2024-07-23 18:24:18,152 - root - INFO - Jobs updated by alice
-2024-07-23 18:31:41,231 - root - INFO - Jobs updated by kevin
-2024-07-23 18:33:10,521 - root - INFO - Jobs updated by shahruk
+Username: Nimis
+MAC Address: 78:e0:81:04:12:48
+INFO - System Info
+TIME: 06:59PM
+DATE: 23 July 2024
+
+
+Username: Nimis
+MAC Address: 78:e0:81:04:12:48
+ERROR - Error occurred while nimo was updating jobs: Error: Error running update_jobs.py: Command '['D:\\CSV-JOBBOARD\\CSV-JOBBOARD\\.venv\\Scripts\\python.exe', 'update_jobs.py', 'https://docs.google.com/spreadsheets/d/1MvcSBIFc6hgd2bqN1NEEhfgcxp9NfPwT9qicIVFiwXA/export?format=xlsx', 'nimo']' returned non-zero exit status 1.
+TIME: 06:59PM
+DATE: 23 July 2024
+
+
+Username: Nimis
+MAC Address: 78:e0:81:04:12:48
+ERROR - Error occurred while nimo was updating jobs: Error: Error running update_jobs.py: Command '['D:\\CSV-JOBBOARD\\CSV-JOBBOARD\\.venv\\Scripts\\python.exe', 'update_jobs.py', 'https://docs.google.com/spreadsheets/d/1MvcSBIFc6hgd2bqN1NEEhfgcxp9NfPwT9qicIVFiwXA/export?format=xlsx', 'nimo']' returned non-zero exit status 1.
+TIME: 06:59PM
+DATE: 23 July 2024
+
+
+Username: Nimis
+MAC Address: 78:e0:81:04:12:48
+INFO - System Info
+TIME: 07:00PM
+DATE: 23 July 2024
+
+
+Username: Nimis
+MAC Address: 78:e0:81:04:12:48
+ERROR - Error occurred while nim was updating jobs: Error: Error running update_jobs.py: Command '['D:\\CSV-JOBBOARD\\CSV-JOBBOARD\\.venv\\Scripts\\python.exe', 'update_jobs.py', 'https://docs.google.com/spreadsheets/d/1MvcSBIFc6hgd2bqN1NEEhfgcxp9NfPwT9qicIVFiwXA/export?format=xlsx', 'nim']' returned non-zero exit status 1.
+TIME: 07:00PM
+DATE: 23 July 2024
+
+
+Username: Nimis
+MAC Address: 78:e0:81:04:12:48
+INFO - System Info
+TIME: 07:02PM
+DATE: 23 July 2024
+
+
+Username: Nimis
+MAC Address: 78:e0:81:04:12:48
+INFO - Jobs updated by nn
+TIME: 07:02PM
+DATE: 23 July 2024
+
+
+Username: Nimis
+MAC Address: 78:e0:81:04:12:48
+INFO - System Info
+TIME: 07:11PM
+DATE: 23 July 2024
+
+
+Username: Nimis
+MAC Address: 78:e0:81:04:12:48
+INFO - Jobs updated by yess
+TIME: 07:11PM
+DATE: 23 July 2024
+
+
+Username: Nimis
+MAC Address: 78:e0:81:04:12:48
+INFO - Jobs updated by yess
+TIME: 07:11PM
+DATE: 23 July 2024
+
+
+Username: Nimis
+MAC Address: 78:e0:81:04:12:48
+INFO - Jobs updated by yess
+TIME: 07:12PM
+DATE: 23 July 2024
+
+
+Username: Nimis
+MAC Address: 78:e0:81:04:12:48
+INFO - System Info
+TIME: 07:15PM
+DATE: 23 July 2024
+
+
+Username: Nimis
+MAC Address: 78:e0:81:04:12:48
+INFO - Jobs updated by hh
+TIME: 07:15PM
+DATE: 23 July 2024
+
+
+Username: Nimis
+MAC Address: 78:e0:81:04:12:48
+INFO - System Info
+TIME: 07:17PM
+DATE: 23 July 2024
+
+
+Username: Nimis
+MAC Address: 78:e0:81:04:12:48
+INFO - Jobs updated by gg
+TIME: 07:17PM
+DATE: 23 July 2024
+
+
+Username: Nimis
+MAC Address: 78:e0:81:04:12:48
+INFO - System Info
+TIME: 07:23PM
+DATE: 23 July 2024
+
+
+Username: Nimis
+MAC Address: 78:e0:81:04:12:48
+INFO - Jobs updated by ya
+TIME: 07:23PM
+DATE: 23 July 2024
+
+

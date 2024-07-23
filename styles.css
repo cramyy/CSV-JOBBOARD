@@ -59,7 +59,58 @@ body {
     font-size: 0.85em;
     line-height: 1.3;
 }
+.job-card.hot-job {
+    border: 2px solid #8c00ff;
+    position: relative;
+}
 
+.job-card.hot-job::before {
+    content: "🔥 Hot Job";
+    position: absolute;
+    top: -3px;
+    right: 10px;
+    background-color: #8c00ff;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.job-card.closed-job {
+    opacity: 0.9;
+    position: relative;
+    overflow: hidden;
+}
+
+.job-card.closed-job::after {
+    content: "CLOSED";
+    position: absolute;
+    top: 25px;
+    right: -55px;
+    transform: rotate(45deg);
+    background-color: rgba(159, 53, 220, 0.85); /* Softer red with some transparency */
+    color: white;
+    padding: 5px 60px;
+    font-size: 0.8em;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.job-card.closed-job .salary{
+    color: #6c757d;
+}
+
+.job-card.closed-job .apply-button {
+    background-color: #6c757d; /* A neutral gray */
+    color: rgb(255, 255, 255);
+    cursor: not-allowed;
+}
+
+.job-card.closed-job .apply-button:hover {
+    background-color: #6c757d;
+}
 .apply-button {
     background-color: #8a2be2;
     color: white;

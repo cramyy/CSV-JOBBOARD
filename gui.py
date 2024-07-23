@@ -1,16 +1,40 @@
 import sys
 import os
 import subprocess
+import uuid
+import getpass
+from datetime import datetime
 from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QLineEdit, QPushButton, QLabel, QTextEdit
 from PyQt6.QtGui import QColor, QPalette
 from PyQt6.QtCore import Qt, QPropertyAnimation, QEasingCurve
-import logging
+
+class CustomLogger:
+    def __init__(self, filename):
+        self.filename = filename
+
+    def log(self, level, message):
+        username = getpass.getuser()
+        mac_address = ':'.join(['{:02x}'.format((uuid.getnode() >> elements) & 0xff) 
+                                for elements in range(0,2*6,2)][::-1])
+        now = datetime.now()
+        time_str = now.strftime("%I:%M%p")
+        date_str = now.strftime("%d %B %Y")
+
+        log_entry = f"Username: {username}\n"
+        log_entry += f"MAC Address: {mac_address}\n"
+        log_entry += f"{level} - {message}\n"
+        log_entry += f"TIME: {time_str}\n"
+        log_entry += f"DATE: {date_str}\n\n\n"
+
+        with open(self.filename, 'a') as log_file:
+            log_file.write(log_entry)
 
 class JobUpdaterGUI(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.logger = CustomLogger('logs.txt')
         self.initUI()
-        self.setup_logging()
+        self.log_system_info()
 
     def initUI(self):
         self.setWindowTitle('Job Updater')
@@ -76,9 +100,8 @@ class JobUpdaterGUI(QMainWindow):
 
         self.update_log_display()
 
-    def setup_logging(self):
-        logging.basicConfig(filename='logs.txt', level=logging.INFO, 
-                            format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    def log_system_info(self):
+        self.logger.log("INFO", "System Info")
 
     def update_jobs(self):
         updater_name = self.name_input.text()
@@ -104,11 +127,11 @@ class JobUpdaterGUI(QMainWindow):
             self.run_update_jobs(download_link, updater_name)
 
             self.status_label.setText("Jobs updated successfully!")
-            logging.info(f"Jobs updated by {updater_name}")
+            self.logger.log("INFO", f"Jobs updated by {updater_name}")
         except Exception as e:
             error_message = f"Error: {str(e)}"
             self.status_label.setText(error_message)
-            logging.error(f"Error occurred while {updater_name} was updating jobs: {error_message}")
+            self.logger.log("ERROR", f"Error occurred while {updater_name} was updating jobs: {error_message}")
 
         self.update_log_display()
 
