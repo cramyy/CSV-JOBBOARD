@@ -3,6 +3,7 @@ import os
 import subprocess
 import uuid
 import getpass
+import requests
 from git import Repo, GitCommandError
 from datetime import datetime
 from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QLineEdit, QPushButton, QLabel, QTextEdit
@@ -34,12 +35,16 @@ class JobUpdaterGUI(QMainWindow):
     def __init__(self):
         super().__init__()
         self.logger = CustomLogger('logs.txt')
+        self.repo = Repo('.')  # Initialize the Git repo
+        self.repo_url = "https://github.com/cramyy/CSV-JOBBOARD.git"
+        self.repo_owner = "cramyy"
+        self.repo_name = "CSV-JOBBOARD"
         self.initUI()
         self.log_system_info()
 
     def initUI(self):
         self.setWindowTitle('Job Updater')
-        self.setGeometry(100, 100, 500, 400)
+        self.setGeometry(100, 100, 500, 500)
 
         central_widget = QWidget(self)
         self.setCentralWidget(central_widget)
@@ -52,6 +57,11 @@ class JobUpdaterGUI(QMainWindow):
         self.link_input = QLineEdit(self)
         self.link_input.setPlaceholderText("Enter Google Sheet link")
         layout.addWidget(self.link_input)
+
+        self.token_input = QLineEdit(self)
+        self.token_input.setPlaceholderText("Enter Passkey")
+        self.token_input.setEchoMode(QLineEdit.EchoMode.Password)
+        layout.addWidget(self.token_input)
 
         self.update_button = QPushButton('Update Jobs', self)
         self.update_button.setStyleSheet("""
@@ -107,31 +117,22 @@ class JobUpdaterGUI(QMainWindow):
     def update_jobs(self):
         updater_name = self.name_input.text()
         sheet_link = self.link_input.text()
+        github_token = self.token_input.text()
 
-        if not updater_name:
-            self.status_label.setText("Please enter your name.")
-            return
-
-        if not sheet_link:
-            self.status_label.setText("Please enter a Google Sheet link.")
+        if not updater_name or not sheet_link or not github_token:
+            self.status_label.setText("Please fill in all fields.")
             return
 
         try:
-            # Animate button
             self.animate_button()
 
-            # Convert the link
             file_id = sheet_link.split('/')[5]
             download_link = f'https://docs.google.com/spreadsheets/d/{file_id}/export?format=xlsx'
 
-            # Run the update_jobs.py file with the new link
-            self.run_update_jobs(download_link, updater_name)
-
-            # Push changes and create a pull request
-            self.push_changes(updater_name)
+            self.run_update_jobs(download_link, updater_name, github_token)
 
             self.status_label.setText("Jobs updated and pull request created successfully!")
-            self.logger.log("INFO", f"Jobs updated and pull request created by {updater_name}")
+            self.logger.log("INFO", f"Jobs updated by {updater_name}")
         except Exception as e:
             error_message = f"Error: {str(e)}"
             self.status_label.setText(error_message)
@@ -148,44 +149,65 @@ class JobUpdaterGUI(QMainWindow):
         animation.setEndValue(start.adjusted(0, 5, 0, 5))
         animation.start()
 
-    def run_update_jobs(self, download_link, updater_name):
-        venv_path = os.environ.get('VIRTUAL_ENV')
-        if venv_path:
-            python_path = os.path.join(venv_path, 'bin', 'python')
-            if os.name == 'nt':  # For Windows
-                python_path = os.path.join(venv_path, 'Scripts', 'python.exe')
-        else:
-            python_path = sys.executable
-
+    def run_update_jobs(self, download_link, updater_name, github_token):
         try:
-            subprocess.run([python_path, 'update_jobs.py', download_link, updater_name], check=True)
+            subprocess.run([sys.executable, 'update_jobs.py', download_link, updater_name], check=True)
+            self.create_pull_request(updater_name, github_token)
         except subprocess.CalledProcessError as e:
             raise Exception(f"Error running update_jobs.py: {e}")
 
-    def push_changes(self, updater_name):
-        repo_path = '.'  # Assuming the script is in the root of the repository
-        repo = Repo(repo_path)
-        repo.git.add(update=True)
-        repo.index.commit(f'Updated jobs by {updater_name}')
-        origin = repo.remote(name='origin')
-        origin.push()
+    def create_pull_request(self, updater_name, github_token):
+        try:
+            self.repo.git.checkout('main')
+            self.repo.git.pull('origin', 'main')
+            
+            branch_name = f"update-jobs-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
+            self.repo.git.checkout('-b', branch_name)
+            
+            self.repo.git.add('.')
+            self.repo.git.commit('-m', f"Update jobs by {updater_name}")
+            self.repo.git.push('--set-upstream', 'origin', branch_name)
+            
+            self.create_github_pr(self.repo_owner, self.repo_name, branch_name, github_token)
+            
+        except GitCommandError as e:
+            self.logger.log("ERROR", f"Git error: {str(e)}")
+        except Exception as e:
+            self.logger.log("ERROR", f"Error creating pull request: {str(e)}")
 
-        # Create a pull request (you need GitHub CLI installed and authenticated)
-        branch_name = f'update-{datetime.now().strftime("%Y%m%d%H%M%S")}'
-        repo.git.checkout('-b', branch_name)
-        repo.git.push('--set-upstream', 'origin', branch_name)
-        subprocess.run(['gh', 'pr', 'create', '--title', f'Update jobs by {updater_name}', '--body', 'Automated update.'])
-
+    def create_github_pr(self, repo_owner, repo_name, branch_name, github_token): 
+        url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/pulls"
+        headers = {
+            "Authorization": f"token {github_token}",
+            "Accept": "application/vnd.github.v3+json"
+        }
+        data = {
+            "title": f"Update jobs - {branch_name}",
+            "head": branch_name,
+            "base": "main",
+            "body": "Automated pull request for job updates."
+        }
+        try:
+            response = requests.post(url, json=data, headers=headers)
+            response.raise_for_status()  # This will raise an exception for HTTP errors
+            pr_url = response.json()["html_url"]
+            self.logger.log("INFO", f"Pull request created successfully: {pr_url}")
+            return True
+        except requests.exceptions.RequestException as e:
+            error_message = f"Failed to create pull request. Error: {str(e)}"
+            if response.text:
+                error_message += f"\nResponse: {response.text}"
+            self.logger.log("ERROR", error_message)
+            self.status_label.setText(error_message)
+            return False
+    
     def update_log_display(self):
         try:
             with open('logs.txt', 'r') as log_file:
                 logs = log_file.readlines()
-                # Reverse the order of logs
                 logs.reverse()
-                # Join the reversed logs into a single string
                 log_text = ''.join(logs)
                 self.log_display.setText(log_text)
-                # Scroll to the bottom
                 self.log_display.verticalScrollBar().setValue(
                     self.log_display.verticalScrollBar().maximum()
                 )

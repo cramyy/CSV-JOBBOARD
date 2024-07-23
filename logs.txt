@@ -1,225 +1,24 @@
 Username: Nimis
 MAC Address: 78:e0:81:04:12:48
 INFO - System Info
-TIME: 06:59PM
-DATE: 23 July 2024
+TIME: 04:38AM
+DATE: 24 July 2024
 
 
 Username: Nimis
 MAC Address: 78:e0:81:04:12:48
-ERROR - Error occurred while nimo was updating jobs: Error: Error running update_jobs.py: Command '['D:\\CSV-JOBBOARD\\CSV-JOBBOARD\\.venv\\Scripts\\python.exe', 'update_jobs.py', 'https://docs.google.com/spreadsheets/d/1MvcSBIFc6hgd2bqN1NEEhfgcxp9NfPwT9qicIVFiwXA/export?format=xlsx', 'nimo']' returned non-zero exit status 1.
-TIME: 06:59PM
-DATE: 23 July 2024
-
-
-Username: Nimis
-MAC Address: 78:e0:81:04:12:48
-ERROR - Error occurred while nimo was updating jobs: Error: Error running update_jobs.py: Command '['D:\\CSV-JOBBOARD\\CSV-JOBBOARD\\.venv\\Scripts\\python.exe', 'update_jobs.py', 'https://docs.google.com/spreadsheets/d/1MvcSBIFc6hgd2bqN1NEEhfgcxp9NfPwT9qicIVFiwXA/export?format=xlsx', 'nimo']' returned non-zero exit status 1.
-TIME: 06:59PM
-DATE: 23 July 2024
-
-
-Username: Nimis
-MAC Address: 78:e0:81:04:12:48
-INFO - System Info
-TIME: 07:00PM
-DATE: 23 July 2024
-
-
-Username: Nimis
-MAC Address: 78:e0:81:04:12:48
-ERROR - Error occurred while nim was updating jobs: Error: Error running update_jobs.py: Command '['D:\\CSV-JOBBOARD\\CSV-JOBBOARD\\.venv\\Scripts\\python.exe', 'update_jobs.py', 'https://docs.google.com/spreadsheets/d/1MvcSBIFc6hgd2bqN1NEEhfgcxp9NfPwT9qicIVFiwXA/export?format=xlsx', 'nim']' returned non-zero exit status 1.
-TIME: 07:00PM
-DATE: 23 July 2024
-
-
-Username: Nimis
-MAC Address: 78:e0:81:04:12:48
-INFO - System Info
-TIME: 07:02PM
-DATE: 23 July 2024
-
-
-Username: Nimis
-MAC Address: 78:e0:81:04:12:48
-INFO - Jobs updated by nn
-TIME: 07:02PM
-DATE: 23 July 2024
-
-
-Username: Nimis
-MAC Address: 78:e0:81:04:12:48
-INFO - System Info
-TIME: 07:11PM
-DATE: 23 July 2024
-
-
-Username: Nimis
-MAC Address: 78:e0:81:04:12:48
-INFO - Jobs updated by yess
-TIME: 07:11PM
-DATE: 23 July 2024
-
-
-Username: Nimis
-MAC Address: 78:e0:81:04:12:48
-INFO - Jobs updated by yess
-TIME: 07:11PM
-DATE: 23 July 2024
-
-
-Username: Nimis
-MAC Address: 78:e0:81:04:12:48
-INFO - Jobs updated by yess
-TIME: 07:12PM
-DATE: 23 July 2024
-
-
-Username: Nimis
-MAC Address: 78:e0:81:04:12:48
-INFO - System Info
-TIME: 07:15PM
-DATE: 23 July 2024
-
-
-Username: Nimis
-MAC Address: 78:e0:81:04:12:48
-INFO - Jobs updated by hh
-TIME: 07:15PM
-DATE: 23 July 2024
-
-
-Username: Nimis
-MAC Address: 78:e0:81:04:12:48
-INFO - System Info
-TIME: 07:17PM
-DATE: 23 July 2024
-
-
-Username: Nimis
-MAC Address: 78:e0:81:04:12:48
-INFO - Jobs updated by gg
-TIME: 07:17PM
-DATE: 23 July 2024
-
-
-Username: Nimis
-MAC Address: 78:e0:81:04:12:48
-INFO - System Info
-TIME: 07:23PM
-DATE: 23 July 2024
-
-
-Username: Nimis
-MAC Address: 78:e0:81:04:12:48
-INFO - Jobs updated by ya
-TIME: 07:23PM
-DATE: 23 July 2024
-
-
-Username: Nimis
-MAC Address: 78:e0:81:04:12:48
-INFO - System Info
-TIME: 07:45PM
-DATE: 23 July 2024
-
-
-Username: Nimis
-MAC Address: 78:e0:81:04:12:48
-ERROR - Error occurred while hiee was updating jobs: Error: Git error: Cmd('git') failed due to: exit code(128)
-  cmdline: git push --set-upstream origin job-update-hiee-20240723-194537
+ERROR - Git error: Cmd('git') failed due to: exit code(128)
+  cmdline: git push --set-upstream origin update-jobs-20240724-043906
   stderr: 'remote: Permission to cramyy/CSV-JOBBOARD.git denied to whynimoisalive.
-fatal: unable to access 'https://github.com/cramyy/CSV-JOBBOARD.git/': The requested URL returned error: 403'
-TIME: 07:45PM
-DATE: 23 July 2024
+fatal: unable to access 'https://github.com/cramyy/CSV-JOBBOARD/': The requested URL returned error: 403'
+TIME: 04:39AM
+DATE: 24 July 2024
 
 
 Username: Nimis
 MAC Address: 78:e0:81:04:12:48
-ERROR - Error occurred while hiee was updating jobs: Error: Git error: Cmd('git') failed due to: exit code(128)
-  cmdline: git push --set-upstream origin job-update-hiee-20240723-195345
-  stderr: 'remote: Permission to cramyy/CSV-JOBBOARD.git denied to whynimoisalive.
-fatal: unable to access 'https://github.com/cramyy/CSV-JOBBOARD.git/': The requested URL returned error: 403'
-TIME: 07:53PM
-DATE: 23 July 2024
-
-
-Username: Nimis
-MAC Address: 78:e0:81:04:12:48
-INFO - System Info
-TIME: 07:54PM
-DATE: 23 July 2024
-
-
-Username: Nimis
-MAC Address: 78:e0:81:04:12:48
-INFO - Jobs updated by hiee
-TIME: 07:54PM
-DATE: 23 July 2024
-
-
-Username: Nimis
-MAC Address: 78:e0:81:04:12:48
-INFO - System Info
-TIME: 07:56PM
-DATE: 23 July 2024
-
-
-Username: Nimis
-MAC Address: 78:e0:81:04:12:48
-INFO - Jobs updated by yrtete
-TIME: 07:56PM
-DATE: 23 July 2024
-
-
-Username: Nimis
-MAC Address: 78:e0:81:04:12:48
-INFO - System Info
-TIME: 08:06PM
-DATE: 23 July 2024
-
-
-Username: Nimis
-MAC Address: 78:e0:81:04:12:48
-INFO - System Info
-TIME: 08:07PM
-DATE: 23 July 2024
-
-
-Username: Nimis
-MAC Address: 78:e0:81:04:12:48
-INFO - System Info
-TIME: 08:12PM
-DATE: 23 July 2024
-
-
-Username: Nimis
-MAC Address: 78:e0:81:04:12:48
-INFO - Jobs updated by hehe
-TIME: 08:12PM
-DATE: 23 July 2024
-
-
-Username: Nimis
-MAC Address: 78:e0:81:04:12:48
-INFO - System Info
-TIME: 08:28PM
-DATE: 23 July 2024
-
-
-Username: Nimis
-MAC Address: 78:e0:81:04:12:48
-INFO - System Info
-TIME: 08:33PM
-DATE: 23 July 2024
-
-
-Username: Nimis
-MAC Address: 78:e0:81:04:12:48
-ERROR - Error occurred while ok was updating jobs: Error: Cmd('git') failed due to: exit code(128)
-  cmdline: git push --porcelain -- origin
-  stderr: 'fatal: unable to access 'https://github.com/cramyy/CSV-JOBBOARD.git/': The requested URL returned error: 403'
-TIME: 08:33PM
-DATE: 23 July 2024
+INFO - Jobs updated by xd
+TIME: 04:39AM
+DATE: 24 July 2024
 
 
