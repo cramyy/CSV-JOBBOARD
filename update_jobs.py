@@ -33,7 +33,7 @@ for column in df.columns:
     df[column] = df[column].apply(remove_parentheses)
 
 # Debug: Print column names
-print("Columns in the DataFrame:", df.columns.tolist())
+
 
 # Check for 'OnFire' column
 if 'OnFire' in df.columns:
@@ -41,8 +41,7 @@ if 'OnFire' in df.columns:
     print("Unique values in 'OnFire' column:", df['OnFire'].unique())
     
     # Normalize 'OnFire' values
-    df['OnFire'] = df['OnFire'].str.lower().str.strip()
-    print("Normalized unique values in 'OnFire' column:", df['OnFire'].unique())
+    
 else:
     print("'OnFire' column does not exist")
 
@@ -50,7 +49,7 @@ else:
 jobs_list = df.to_dict(orient='records')
 
 # Debug: Print the first job dictionary
-print("First job data:", jobs_list[0])
+
 
 # Setup Jinja2 environment
 env = Environment(loader=FileSystemLoader('.'))

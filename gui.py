@@ -3,6 +3,8 @@ import os
 import subprocess
 import uuid
 import getpass
+from git import Repo, GitCommandError
+from datetime import datetime
 from datetime import datetime
 from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QLineEdit, QPushButton, QLabel, QTextEdit
 from PyQt6.QtGui import QColor, QPalette
@@ -161,8 +163,13 @@ class JobUpdaterGUI(QMainWindow):
     def update_log_display(self):
         try:
             with open('logs.txt', 'r') as log_file:
-                logs = log_file.read()
-                self.log_display.setText(logs)
+                logs = log_file.readlines()
+                # Reverse the order of logs
+                logs.reverse()
+                # Join the reversed logs into a single string
+                log_text = ''.join(logs)
+                self.log_display.setText(log_text)
+                # Scroll to the bottom
                 self.log_display.verticalScrollBar().setValue(
                     self.log_display.verticalScrollBar().maximum()
                 )
