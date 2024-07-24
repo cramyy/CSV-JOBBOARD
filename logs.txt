@@ -46,3 +46,34 @@ TIME: 06:49AM
 DATE: 24 July 2024
 
 
+Username: Nimis
+MAC Address: 78:e0:81:04:12:48
+INFO - System Info
+TIME: 06:50AM
+DATE: 24 July 2024
+
+
+Username: Nimis
+MAC Address: 78:e0:81:04:12:48
+ERROR - Git error: Cmd('git') failed due to: exit code(1)
+  cmdline: git checkout main
+  stderr: 'error: Your local changes to the following files would be overwritten by checkout:
+	logs.txt
+Please commit your changes or stash them before you switch branches.
+Aborting'
+TIME: 06:50AM
+DATE: 24 July 2024
+
+
+Username: Nimis
+MAC Address: 78:e0:81:04:12:48
+ERROR - Error occurred while nimish was updating jobs: Error: Cmd('git') failed due to: exit code(1)
+  cmdline: git checkout main
+  stderr: 'error: Your local changes to the following files would be overwritten by checkout:
+	logs.txt
+Please commit your changes or stash them before you switch branches.
+Aborting'
+TIME: 06:50AM
+DATE: 24 July 2024
+
+
