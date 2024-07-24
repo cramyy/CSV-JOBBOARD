@@ -1,5 +1,4 @@
 @echo off
-
 :: Check if Python is installed
 python --version >nul 2>&1
 if %errorlevel% neq 0 (
@@ -36,6 +35,20 @@ for /f "delims=" %%i in ('path') do (
     set "PATH=%%i"
 )
 
+:: Clone or update the repository
+if exist CSV-JOBBOARD (
+    echo Repository folder already exists. Updating...
+    cd CSV-JOBBOARD
+    git fetch --all
+    git reset --hard origin/main
+    cd ..
+) else (
+    echo Cloning the repository...
+    git clone https://github.com/cramyy/CSV-JOBBOARD.git
+)
+
+cd CSV-JOBBOARD
+
 :: Check if req.txt exists and install requirements if it does
 if exist req.txt (
     echo Installing requirements from req.txt...
@@ -44,8 +57,7 @@ if exist req.txt (
     echo req.txt not found. Skipping requirements installation.
 )
 
-:: Run gui.py
+:: Run guii.py
 echo Running gui.py...
 python gui.py
-
 pause
