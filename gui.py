@@ -213,7 +213,7 @@ class JobUpdaterGUI(QMainWindow):
                 )
         except FileNotFoundError:
             self.log_display.setText("No logs found.")
-
+#d
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = JobUpdaterGUI()
