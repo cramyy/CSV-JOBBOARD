@@ -1,0 +1,7 @@
+Username: Nimis
+MAC Address: 78:e0:81:04:12:48
+INFO - System Info
+TIME: 06:33AM
+DATE: 24 July 2024
+
+
