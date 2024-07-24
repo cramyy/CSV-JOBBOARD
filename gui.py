@@ -158,34 +158,42 @@ class JobUpdaterGUI(QMainWindow):
 
     def create_pull_request(self, updater_name, github_token):
         try:
-            self.repo.git.checkout('main')
-            self.repo.git.pull('origin', 'main')
+            repo = self.repo
+            repo.git.checkout('main')
+            repo.git.pull('origin', 'main')
             
             branch_name = f"update-jobs-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
-            self.repo.git.checkout('-b', branch_name)
+            repo.git.checkout('-b', branch_name)
             
-            self.repo.git.add('.')
-            self.repo.git.commit('-m', f"Update jobs by {updater_name}")
-            self.repo.git.push('--set-upstream', 'origin', branch_name)
+            repo.git.add('.')
+            repo.git.commit('-m', f"Update jobs by {updater_name}")
             
-            self.create_github_pr(self.repo_owner, self.repo_name, branch_name, github_token)
+            # Set the remote URL with the token
+            remote_url = f'https://{github_token}@github.com/{self.repo_owner}/{self.repo_name}.git'
+            repo.remotes.origin.set_url(remote_url)
+            
+            repo.git.push('--set-upstream', 'origin', branch_name)
+            
+            self.create_github_pr(self.repo_owner, self.repo_name, branch_name, github_token, updater_name)
             
         except GitCommandError as e:
             self.logger.log("ERROR", f"Git error: {str(e)}")
+            raise
         except Exception as e:
             self.logger.log("ERROR", f"Error creating pull request: {str(e)}")
+            raise
 
-    def create_github_pr(self, repo_owner, repo_name, branch_name, github_token): 
+    def create_github_pr(self, repo_owner, repo_name, branch_name, github_token, updater_name): 
         url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/pulls"
         headers = {
             "Authorization": f"token {github_token}",
             "Accept": "application/vnd.github.v3+json"
         }
         data = {
-            "title": f"Update jobs - {branch_name}",
+            "title": f"Update jobs by {updater_name}",
             "head": branch_name,
             "base": "main",
-            "body": "Automated pull request for job updates."
+            "body": f"Automated pull request for job updates by {updater_name}."
         }
         try:
             response = requests.post(url, json=data, headers=headers)
@@ -195,12 +203,13 @@ class JobUpdaterGUI(QMainWindow):
             return True
         except requests.exceptions.RequestException as e:
             error_message = f"Failed to create pull request. Error: {str(e)}"
-            if response.text:
-                error_message += f"\nResponse: {response.text}"
+            if hasattr(e, 'response') and e.response is not None:
+                error_message += f"\nResponse status code: {e.response.status_code}"
+                error_message += f"\nResponse body: {e.response.text}"
             self.logger.log("ERROR", error_message)
             self.status_label.setText(error_message)
-            return False
-    
+            raise
+
     def update_log_display(self):
         try:
             with open('logs.txt', 'r') as log_file:
