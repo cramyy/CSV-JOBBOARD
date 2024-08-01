@@ -47,3 +47,10 @@ TIME: 08:33PM
 DATE: 01 August 2024
 
 
+Username: Nimis
+MAC Address: 78:e0:81:04:12:48
+INFO - System Info
+TIME: 08:39PM
+DATE: 01 August 2024
+
+
