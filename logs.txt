@@ -1,39 +1,39 @@
-Username: Nimis
+Username: Nimish
 MAC Address: 78:e0:81:04:12:48
 INFO - System Info
 TIME: 06:54AM
 DATE: 24 July 2024
 
 
-Username: Nimis
+Username: Nimish
 MAC Address: 78:e0:81:04:12:48
 INFO - System Info
 TIME: 07:07AM
 DATE: 24 July 2024
 
 
-Username: Nimis
+Username: Nimish
 MAC Address: 78:e0:81:04:12:48
 INFO - System Info
 TIME: 07:10AM
 DATE: 24 July 2024
 
 
-Username: Nimis
+Username: Nimish
 MAC Address: 78:e0:81:04:12:48
 INFO - System Info
 TIME: 07:42AM
 DATE: 24 July 2024
 
 
-Username: Nimis
+Username: Nimish
 MAC Address: 78:e0:81:04:12:48
 INFO - System Info
 TIME: 03:18PM
 DATE: 24 July 2024
 
 
-Username: Nimis
+Username: Nimish
 MAC Address: 78:e0:81:04:12:48
 INFO - System Info
 TIME: 08:09PM
