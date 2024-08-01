@@ -37,15 +37,11 @@ for /f "delims=" %%i in ('path') do (
 
 :: Clone or update the repository
 if exist CSV-JOBBOARD (
-    echo Repository folder already exists. Updating...
-    cd CSV-JOBBOARD
-    git fetch --all
-    git reset --hard origin/main
-    cd ..
-) else (
-    echo Cloning the repository...
-    git clone https://github.com/cramyy/CSV-JOBBOARD.git
+    echo Deleting existing repository folder...
+    rmdir /s /q CSV-JOBBOARD
 )
+echo Cloning the repository...
+git clone https://github.com/cramyy/CSV-JOBBOARD.git
 
 cd CSV-JOBBOARD
 
